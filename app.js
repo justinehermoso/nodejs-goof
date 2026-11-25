@@ -2,6 +2,8 @@
  * Module dependencies.
  */
 
+const Zen = require('@aikidosec/firewall');
+
 // mongoose setup
 require('./mongoose-db');
 require('./typeorm-db')
@@ -47,6 +49,9 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(fileUpload());
+
+// Zen rate limiting and user blocking
+Zen.addExpressMiddleware(app);
 
 // Routes
 app.use(routes.current_user);
